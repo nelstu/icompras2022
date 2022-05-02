@@ -19,13 +19,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author nstuardo
  */
-public class SelPlan extends javax.swing.JFrame {
+public class SelPlan2 extends javax.swing.JFrame {
     DefaultTableModel modeloc;
 
     /**
      * Creates new form SelPlan
      */
-    public SelPlan() throws ClassNotFoundException {
+    public SelPlan2() throws ClassNotFoundException {
         initComponents();
         setLocationRelativeTo(null);
          modeloc = new DefaultTableModel();
@@ -59,7 +59,7 @@ public class SelPlan extends javax.swing.JFrame {
             if (miConexion != null) {
                 try {
                 
-                    String instruccionSql = "SELECT * FROM [valyval].[dbo].[PLAN_DB] WHERE  NIVEL1=4 AND CODIGO='"+this.jTextField1.getText()+"'";
+                    String instruccionSql = "SELECT * FROM [valyval].[dbo].[PLAN_DB] WHERE (NIVEL4=4 OR NIVEL4=3) AND (CODIGO='"+this.jTextField1.getText()+"' OR NOMBRE LIKE '%"+this.jTextField1.getText()+"%')";
                     miStatement = miConexion.createStatement();
                     miResultset = miStatement.executeQuery(instruccionSql);
                     String nombre = "";
@@ -235,7 +235,7 @@ public class SelPlan extends javax.swing.JFrame {
             // TODO add your handling code here:
             buscarcuenta();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SelPlan.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SelPlan2.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -249,11 +249,11 @@ public class SelPlan extends javax.swing.JFrame {
 
         // set the selected row data into jtextfields
         if (model.getValueAt(selectedRowIndex, 0)!= null){
-             Ctas.jTextField1.setText(model.getValueAt(selectedRowIndex, 0).toString());
+             detMatriz.jTextField2.setText(model.getValueAt(selectedRowIndex, 0).toString());
              //jTextField1.setText();
         }
          if (model.getValueAt(selectedRowIndex, 1)!= null){
-             Ctas.jTextField2.setText(model.getValueAt(selectedRowIndex, 1).toString());
+              detMatriz.jTextField3.setText(model.getValueAt(selectedRowIndex, 1).toString());
              //jTextField1.setText();
         }
       // Ctas ca=new Ctas();
@@ -278,23 +278,24 @@ public class SelPlan extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SelPlan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelPlan2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SelPlan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelPlan2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SelPlan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelPlan2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SelPlan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelPlan2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new SelPlan().setVisible(true);
+                    new SelPlan2().setVisible(true);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(SelPlan.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(SelPlan2.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });

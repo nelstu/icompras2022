@@ -5,6 +5,11 @@
  */
 package com.mycompany.icompras2022;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,8 +25,17 @@ public class Ctas extends javax.swing.JFrame {
     public Ctas() {
         initComponents();
         setLocationRelativeTo(null);
+        this.jTextField5.setText(Panel.jTextField1.getText());
     }
 
+        private void cargarDriver() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (Exception ex) {
+
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,6 +55,7 @@ public class Ctas extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jTextField5 = new javax.swing.JTextField();
 
         jLabel1.setText("Cuenta");
 
@@ -63,6 +78,8 @@ public class Ctas extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        jTextField5.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,7 +107,8 @@ public class Ctas extends javax.swing.JFrame {
                             .addComponent(jTextField2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -101,7 +119,8 @@ public class Ctas extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -125,14 +144,44 @@ public class Ctas extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Panel pa=new Panel();
-        pa.llenarcta();
-      /*
-        pa.AddRowToJTable(new Object[]{
-               this.jTextField1.getText(),this.jTextField2.getText(),this.jTextField3.getText(),this.jTextField4.getText()
-        });
-        System.out.println("Aqui");
-        */
+    //    Panel pa=new Panel();
+        //    pa.llenarcta();
+        Object[] object = new Object[5];
+        object[0] = Ctas.jTextField1.getText();
+        object[1] = Ctas.jTextField2.getText();
+        object[2] = this.jTextField3.getText();
+        object[3] = this.jTextField4.getText();
+        object[4] = this.jTextField5.getText();
+        Panel.mimo.addRow(object);
+        
+        //agregar a mysql
+        //id,ide,cuenta,descripcion,debe,haber from detctas
+         cargarDriver();
+        Conexion cn = new Conexion();
+        String dbURL = "jdbc:mysql://" + cn.ip + ":3306/" + cn.base;
+        String username = cn.usuario;
+        String password = cn.pass;
+        Connection dbCon = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        int ide=0;
+        try {
+            dbCon = DriverManager.getConnection(dbURL, username, password);
+            Statement comando = dbCon.createStatement();
+            String comprobante = jTextField1.getText();
+
+            comando.executeUpdate("insert into detctas(ide,cuenta,descripcion,debe,haber) values (" + this.jTextField5.getText() + ",'" + Ctas.jTextField1.getText() + "','" + Ctas.jTextField2.getText() + "'," + this.jTextField3.getText() + "," + this.jTextField4.getText() + ")");
+          
+        } catch (SQLException ex) {
+            setTitle(ex.toString());
+        }
+        
+        
+        //fin agregar a mysql
+        
+        
+        this.dispose();
+  
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -193,5 +242,6 @@ public class Ctas extends javax.swing.JFrame {
     public static javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

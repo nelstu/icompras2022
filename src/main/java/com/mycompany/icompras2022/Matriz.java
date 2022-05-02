@@ -5,6 +5,7 @@
  */
 package com.mycompany.icompras2022;
 
+import static com.mycompany.icompras2022.SelPlan2.jTable1;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ public class Matriz extends javax.swing.JDialog {
      * Creates new form Matriz
      */
     public Matriz(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+       // super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
          modelo = new DefaultTableModel();
@@ -103,8 +104,9 @@ public class Matriz extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Comprobantes Tipo");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -118,13 +120,33 @@ public class Matriz extends javax.swing.JDialog {
                 "id", "Comprobante"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Nuevo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Grabar");
+        jButton2.setText("Editar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Salir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Buscar");
 
@@ -148,7 +170,11 @@ public class Matriz extends javax.swing.JDialog {
                         .addGap(26, 26, 26)
                         .addComponent(jButton2)
                         .addGap(33, 33, 33)
-                        .addComponent(jButton3))
+                        .addComponent(jButton3)
+                        .addGap(63, 63, 63)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -159,7 +185,9 @@ public class Matriz extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -172,6 +200,47 @@ public class Matriz extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        detMatriz detM=new detMatriz();
+        detM.setVisible(true);
+        detM.jLabel4.setText("Nuevo");
+       
+      
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+       this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        detMatriz detM=new detMatriz();
+        detM.setVisible(true);
+        detM.jLabel4.setText("Editar");
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        // get the selected row index
+        int selectedRowIndex = jTable1.getSelectedRow();
+
+        // set the selected row data into jtextfields
+        if (model.getValueAt(selectedRowIndex, 0) != null) {
+            this.jTextField2.setText(model.getValueAt(selectedRowIndex, 0).toString());
+            //jTextField1.setText();
+        }
+         if (model.getValueAt(selectedRowIndex, 1) != null) {
+            this.jTextField3.setText(model.getValueAt(selectedRowIndex, 1).toString());
+            //jTextField1.setText();
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -224,5 +293,7 @@ public class Matriz extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    public static javax.swing.JTextField jTextField2;
+    public static javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
